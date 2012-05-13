@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<!-- Run this via mvn test -->
+
+<project default="testTypical" basedir="." xmlns:ca="antlib:net.sourceforge.clearantlib">
+
+	<!-- Use this prop if testing with maven -->
+	<property name="test.resources.dir" value="${basedir}/src/test/resources" />
+
+	<!-- Use this prop if testing in ide -->
+	<!--<property name="test.resources.dir" value="${basedir}" />-->
+	
+	<property name="temp.dir" value="${basedir}/target/temp" />
+	
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<mkdir dir="${temp.dir}"/>
+	</target>
+
+	<target name="makeTask" depends="clean">
+
+		<path id="jstest.classpath">
+			<fileset dir="${test.resources.dir}/../../../target"
+				includes="ant-jstest-test-jar-with-dependencies.jar" />
+		</path>
+
+		<taskdef name="jstest" classname="com.philmader.ant.JsTestRunnerAntTask">
+			<classpath refid="jstest.classpath" />
+		</taskdef>
+	</target>
+
+	<target name="testTypical" depends="makeTask">
+
+		<jstest dir="${test.resources.dir}/tests" phantomWin="${test.resources.dir}/phantomjs.exe">
+			<include name="**/*-test.html" />
+		</jstest>
+
+	</target>
+	
+	<target name="testNoFail" depends="makeTask">
+
+		<jstest dir="${test.resources.dir}/tests" phantomWin="${test.resources.dir}/phantomjs.exe" fail="false">
+			<include name="**/*-test.js" />
+		</jstest>
+
+	</target>
+	
+</project>

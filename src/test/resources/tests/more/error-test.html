@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Test for testing</title>
+	
+<!-- 	<script src="../jquery.js"></script> -->
+	<script src="../qunit.js"></script>
+
+	<script>
+
+		$(document).ready(function() {
+			module("module 1a");
+			test("sample", function() {
+				
+				$("#button").click(function() {
+				    $("#result").html("Clickked");
+				});
+		
+				//this should fail
+		        $("#button").trigger("click");
+		        equal($("#result").html(), "Clicked", "Button did not work");  
+		
+		        //this shoul pass
+		        $("#button").trigger("click");
+		        ok(true, "True is true");  		
+		    });
+			module("module 1b");
+			test("sample", function() {
+				
+				//this should pass
+				equal("hello", "hello", "Two strings are equal");
+		    });
+		});
+	</script>
+</head>
+<body>
+
+<h1 id="qunit-header">Sample test</h1>
+ <h2 id="qunit-banner"></h2>
+ <div id="qunit-testrunner-toolbar"></div>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ 
+	<button id="button">Click me</button>
+	<div id="result"></div>
+</body>
+</html>
