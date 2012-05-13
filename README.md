@@ -14,7 +14,7 @@ To get started download the ant-jstestrunner jar file and include the following 
 
 <target name="runJsTests">
   
-  <!-- Lint the code -->
+  <!-- Run the tests -->
   <jstest dir="${basedir}/src/tests" includes="**/*.html" phantomWin="${basedir}/phantom/win/phantomjs.exe" />
     
 </target>
