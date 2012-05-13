@@ -2,7 +2,8 @@
 
 Automate Javascript unit tests (currently support is limited to [QUnit](http://docs.jquery.com/Qunit)) with Apache Ant.
 
-The task uses [Phantom JS](http://phantomjs.org/), a headless webkit browser, to open html unit test files
+The task uses [Phantom JS](http://phantomjs.org/), a headless webkit browser, to open and run html unit test files. The Ant task uses the 
+output to report the results to the console and fail the build if any assertions failed or errors were found.
 
 To get started download the ant-jstestrunner jar file and include the following code in your Ant build file.
 
@@ -31,7 +32,7 @@ fail         | Instructs the task to fail the build if there are any JS test fai
 
 The task is an implicit fileset. See http://ant.apache.org/manual/Types/fileset.html for more parameters used for file matching or see the usage examples below.
 
-* The task does not come bundled Phantom JS. To ensure the build is portable across different operating systems you must specify the location of the Phantom JS executable for each OS the build may run on.
+\* The task is not bundled with Phantom JS, you must specify its location. To ensure the build is portable across different operating systems you must specify the location of the Phantom JS executable for each OS the build may run on.
 It is recommended to include the Phantom JS executables within your project.
 
 ##Usage examples
