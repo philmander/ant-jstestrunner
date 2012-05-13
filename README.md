@@ -1,8 +1,8 @@
 #JSTestRunner Ant Task
 
-Automate Javascript unit tests (currently support is limited to QUnit) with Apache Ant.
+Automate Javascript unit tests (currently support is limited to [QUnit](http://docs.jquery.com/Qunit)) with Apache Ant.
 
-The task uses Phantom JS, a headless webkit browser, to open html unit test files
+The task uses [Phantom JS](http://phantomjs.org/), a headless webkit browser, to open html unit test files
 
 To get started download the ant-jstestrunner jar file and include the following code in your Ant build file.
 
