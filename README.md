@@ -1,4 +1,4 @@
-#Ant task for JSHint
+#JSTestRunner Ant Task
 
 Automate Javascript unit tests (currently support is limited to QUnit) with Apache Ant.
 
@@ -8,7 +8,7 @@ To get started download the ant-jstestrunner jar file and include the following 
 
 ```xml
 <!-- Define the task -->
-<taskdef name="jshint" classname="com.philmander.ant.JsTestRunnerAntTask" 
+<taskdef name="jstest" classname="com.philmander.ant.JsTestRunnerAntTask" 
     classpath="${basedir}/jstestrunner/ant-jstestrunner-0.1-deps.jar" />
 
 <target name="runJsTests">
@@ -65,7 +65,7 @@ or downloading the jar release and running
 
 `mvn install:install-file -Dfile=/path/to/ant-jstestrunner-0.1.deps.jar -DgroupId=com.philmander.ant -DartifactId=ant-jstestrunner -Dversion=0.1 -Dpackaging=jar`
 
-Now use the antrun plugin to add jshint to your Maven build
+Now use the antrun plugin to add the js test runner to your Maven build
 
 ```xml
 <plugin>
@@ -79,7 +79,7 @@ Now use the antrun plugin to add jshint to your Maven build
 			<configuration>
 				<target>
 					<!-- Define the task -->
-					<taskdef name="jshint" classname="com.philmander.ant.JsTestRunnerAntTask" 
+					<taskdef name="jstest" classname="com.philmander.ant.JsTestRunnerAntTask" 
 					    classpath="maven.plugin.classpath" />
 										 
 					<!-- Lint the code -->
@@ -102,7 +102,7 @@ Now use the antrun plugin to add jshint to your Maven build
 ```
 ## Fork and run locally ##
 
-Ant-Jshint is built using Apache Maven. 
+Ant-Jstestrunner is built using Apache Maven. 
 
 To run tests against your code run `mvn test`
 
