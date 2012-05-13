@@ -30,6 +30,7 @@ public class JsTestRunnerAntTaskTest extends BuildFileTest {
 	public void testTask_noFail() throws IOException {
 		try {
 			executeTarget("testNoFail");
+			
 		} catch (BuildException e) {
 			fail("Exception shouldn't be thrown");
 		}

@@ -25,8 +25,7 @@ public class PhantomTestRunnerTest {
 		testRunner.setLogger(new AntTaskLogger() {
 			
 			public void log(String msg) {
-				System.out.println(msg);
-				
+				System.out.println(msg);				
 			}
 		});
 		

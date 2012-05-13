@@ -63,7 +63,7 @@ public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  
 			int passCount = testRunner.getPassCount();
 			int failCount = testRunner.getFailCount();
 			int errorCount = testRunner.getErrorCount();
-			log(passCount + " passed. " + failCount + "failed. " + errorCount + " errors");
+			log(passCount + " passed. " + failCount + " failed. " + errorCount + " errors");
 			 
 			if(failCount > 0 || errorCount > 0) {
 				String message  = getFailureMessage(failCount, errorCount);
@@ -143,7 +143,8 @@ public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  
 
 	protected static String getFailureMessage(int failCount, int errorCount) {
 		String pluralFail = failCount > 1 ? "s" : "";
-		String message = "JS tests failed. " + failCount + "assertion" + pluralFail + " failed. " + errorCount + " errors";
+		String pluralErrors = errorCount > 1 ? "s" : "";
+		String message = "JS tests failed. " + failCount + " assertion" + pluralFail + " failed. " + errorCount + " error" + pluralErrors + ".";
 		return message;
 	}
 

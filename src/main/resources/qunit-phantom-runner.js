@@ -47,11 +47,12 @@ page.onInitialized = function() {
 			
 			QUnit.log = function(test) {
 
+				var message = test.message || "";
 		    	if(test.result) {
-		    		alert(PASS_PREFIX + test.message);
+		    		alert(PASS_PREFIX + message);
 		    	} 
 				else {
-		    		alert(FAIL_PREFIX + test.message + ". Expected [" + test.expected + "] but was [" + test.actual + "].");
+		    		alert(FAIL_PREFIX + message + ". Expected [" + test.expected + "] but was [" + test.actual + "].");
 		    	}
 			};
 
