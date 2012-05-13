@@ -27,7 +27,7 @@ public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  
 	private String reportFile = null;
 
 	/**
-	 * Performs JSHint validation on a set of files
+	 * Run Phantom test runner on a set of files
 	 */
 	@Override
 	public void execute() throws BuildException {
