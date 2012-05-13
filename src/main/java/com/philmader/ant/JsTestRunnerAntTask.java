@@ -12,6 +12,11 @@ import org.apache.tools.ant.taskdefs.MatchingTask;
 import com.google.common.io.Files;
 import com.philmader.ant.jstest.PhantomTestRunner;
 
+/**
+ * JsTestRunner Ant Task
+ * @author Phil Mander
+ *
+ */
 public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  {
 	
 	private File dir;
@@ -129,7 +134,7 @@ public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  
 		} else {
 			File phantomFile = new File(phantom);
 			if(!phantomFile.exists()) {				
-				throw new FileNotFoundException("Phantom executable does not exist + (" + phantom + ")");
+				throw new FileNotFoundException("Phantom executable does not exist for " + SystemUtils.OS_NAME + "(" + phantom + ")");
 			}
 		}
 		

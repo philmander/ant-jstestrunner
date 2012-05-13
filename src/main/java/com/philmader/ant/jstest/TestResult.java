@@ -1,5 +1,10 @@
 package com.philmader.ant.jstest;
 
+/**
+ * Bean to hold test result
+ * @author Phil Mander
+ *
+ */
 public class TestResult {
 	
 	private ResultType result;
