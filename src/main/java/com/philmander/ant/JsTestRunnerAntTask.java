@@ -1,4 +1,4 @@
-package com.philmader.ant;
+package com.philmander.ant;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
 import com.google.common.io.Files;
-import com.philmader.ant.jstest.PhantomTestRunner;
+import com.philmander.ant.jstest.PhantomTestRunner;
 
 /**
  * JsTestRunner Ant Task

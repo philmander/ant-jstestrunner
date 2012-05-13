@@ -21,10 +21,10 @@
 
 		<path id="jstest.classpath">
 			<fileset dir="${test.resources.dir}/../../../target"
-				includes="ant-jstest-test-jar-with-dependencies.jar" />			
+				includes="ant-jstest-test-jar-with-dependencies.jar,ant-jstestrunner-0.1-deps.jar" />			
 		</path>
 
-		<taskdef name="jstest" classname="com.philmader.ant.JsTestRunnerAntTask">
+		<taskdef name="jstest" classname="com.philmander.ant.JsTestRunnerAntTask">
 			<classpath refid="jstest.classpath" />
 		</taskdef>
 	</target>
