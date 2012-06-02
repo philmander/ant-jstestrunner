@@ -10,6 +10,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
 import com.google.common.io.Files;
+import com.philmander.ant.jstest.JsTestResults;
 import com.philmander.ant.jstest.PhantomTestRunner;
 
 /**
@@ -17,7 +18,7 @@ import com.philmander.ant.jstest.PhantomTestRunner;
  * @author Phil Mander
  *
  */
-public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  {
+public class JsTestRunnerAntTask extends MatchingTask implements JsTestLogger  {
 	
 	private File dir;
 
@@ -55,14 +56,14 @@ public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  
 			log("Running JS Tests...");
 			log("-------------------------------------------------------------------------------");
 
-			testRunner.runTests(absoluteFiles);
+			JsTestResults results = testRunner.runTests(absoluteFiles);
 			
 			log("-------------------------------------------------------------------------------");
 			log("Running JS Tests Completed");
 			
-			int passCount = testRunner.getPassCount();
-			int failCount = testRunner.getFailCount();
-			int errorCount = testRunner.getErrorCount();
+			int passCount = results.getPassCount();
+			int failCount = results.getFailCount();
+			int errorCount = results.getErrorCount();
 			log(passCount + " passed. " + failCount + " failed. " + errorCount + " errors");
 			 
 			if(failCount > 0 || errorCount > 0) {
@@ -131,26 +132,17 @@ public class JsTestRunnerAntTask extends MatchingTask implements AntTaskLogger  
 		
 		if(phantom == null) {
 			throw new BuildException("No phantom executable specified. (Using " + SystemUtils.OS_NAME + ")");
-		} else {
-			File phantomFile = new File(phantom);
-			if(!phantomFile.exists()) {				
-				throw new FileNotFoundException("Phantom executable does not exist for " + SystemUtils.OS_NAME + "(" + phantom + ")");
-			}
-		}
+		} 		
 		
 		return phantom;
 	}
 
 	protected static String getFailureMessage(int failCount, int errorCount) {
-		String pluralFail = failCount > 1 ? "s" : "";
-		String pluralErrors = errorCount > 1 ? "s" : "";
-		String message = "JS tests failed. " + failCount + " assertion" + pluralFail + " failed. " + errorCount + " error" + pluralErrors + ".";
-		return message;
+		return PhantomTestRunner.getFailureMessage(failCount, errorCount);
 	}
 
 	protected static String getSuccessMessage(int passCount) {
-		String message = "All JS tests passed";
-		return message;
+		return PhantomTestRunner.getSuccessMessage(passCount);
 	}
 
 	/**

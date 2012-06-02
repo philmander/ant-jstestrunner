@@ -5,7 +5,7 @@ package com.philmander.ant;
  * @author Phil Mander
  *
  */
-public interface AntTaskLogger {
+public interface JsTestLogger {
 	
 	public void log(String msg);
 }

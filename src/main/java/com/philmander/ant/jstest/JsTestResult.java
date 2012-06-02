@@ -5,7 +5,7 @@ package com.philmander.ant.jstest;
  * @author Phil Mander
  *
  */
-public class TestResult {
+public class JsTestResult {
 	
 	private ResultType result;
 
@@ -15,7 +15,7 @@ public class TestResult {
 		PASS, FAIL, ERROR
 	}
 
-	public TestResult(ResultType result, String message) {
+	public JsTestResult(ResultType result, String message) {
 		this.result = result;
 		this.message = message;
 	}
