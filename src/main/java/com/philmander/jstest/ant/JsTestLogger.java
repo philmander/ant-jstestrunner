@@ -8,4 +8,6 @@ package com.philmander.jstest.ant;
 public interface JsTestLogger {
 	
 	public void log(String msg);
+	
+	public void error(String msg);	
 }

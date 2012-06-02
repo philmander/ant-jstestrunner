@@ -27,13 +27,6 @@ public class PhantomTestRunnerTest {
 		try {
 			testRunner = new PhantomTestRunner(phantom.getAbsolutePath());
 
-			testRunner.setLogger(new JsTestLogger() {
-
-				public void log(String msg) {
-					System.out.println(msg);
-				}
-			});
-
 			File testFile1 = new File("src/test/resources/tests/one-test.html");
 			File testFile2 = new File("src/test/resources/tests/two-test.html");
 			File testFile3 = new File("src/test/resources/tests/more/three-test.html");

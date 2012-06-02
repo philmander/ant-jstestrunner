@@ -10,8 +10,6 @@ import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
@@ -41,8 +39,10 @@ public class PhantomTestRunner {
 
 	private String phantom = null;
 
-	
-	
+	/**
+	 * CLI for phantom test runner
+	 * @param args
+	 */
 	public static void main(String[] args) {		
 		
 		File currentDir = new File(".");
@@ -54,19 +54,25 @@ public class PhantomTestRunner {
 		options.addOption( "p", "phantom", true, "Location of Phantom JS executable" );
 		
 		try {			
+			
+			JsTestLogger logger = new JsTestLogger() {
+				
+				public void log(String msg) {
+					System.out.println("[jstest] " + msg);					
+				}
+				
+				public void error(String msg) {
+					System.err.println("[jstest] " + msg);
+				}
+			};
+			
 			CommandLine cl = parser.parse(options, args);
 			
 			String phantomOption = cl.getOptionValue('p');
 			File phantomLoc = new File(currentDir, phantomOption);
 			
 			PhantomTestRunner testRunner = new PhantomTestRunner(phantomLoc.getAbsolutePath());
-			testRunner.setLogger(new JsTestLogger() {
-				
-				public void log(String msg) {
-					System.out.println(msg);
-					
-				}
-			});
+			testRunner.setLogger(logger);
 			
 			List<String> testFiles = new ArrayList<String>();
 			for(Object arg : cl.getArgList()) {
@@ -75,12 +81,12 @@ public class PhantomTestRunner {
 				if(testFile.exists()) {
 					testFiles.add(testFile.getAbsolutePath());
 				} else {
-					System.out.println("Couldn't find " + testFile.getAbsolutePath()); 
+					logger.error("Couldn't find " + testFile.getAbsolutePath()); 
 				}
 			}
 			
-			System.out.println("Using Phantom JS at : " + phantomLoc.getAbsolutePath());
-			System.out.println("Running tests on " + testFiles.size() + " files");
+			logger.log("Using Phantom JS at : " + phantomLoc.getAbsolutePath());
+			logger.log("Running tests on " + testFiles.size() + " files");
 			
 			testRunner.runTests(testFiles.toArray(new String[testFiles.size()]));
 			

@@ -199,4 +199,8 @@ public class JsTestRunnerAntTask extends MatchingTask implements JsTestLogger  {
 	public void setReportFile(String reportFile) {
 		this.reportFile = reportFile;
 	}
+
+	public void error(String msg) {
+		log(msg);
+	}
 }
