@@ -89,8 +89,7 @@ public class PhantomTestRunner {
 			logger.log("Running tests on " + testFiles.size() + " files");
 			
 			testRunner.runTests(testFiles.toArray(new String[testFiles.size()]));
-			
-						
+									
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -120,8 +119,7 @@ public class PhantomTestRunner {
 	public JsTestResults runTests(String[] testFiles) throws IOException {		
 				
 		JsTestResults results = new JsTestResults();
-		
-		
+				
 		//set up process params
 		String qunitRunner = setupPhantomRunnerFile();
 		

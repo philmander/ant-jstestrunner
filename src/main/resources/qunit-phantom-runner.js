@@ -16,7 +16,7 @@ page.onError = function (msg, trace) {
     
     trace.forEach(function(item) {
         console.log('  ', item.file, ':', item.line);
-    })
+    });
     
     phantom.exit(1);
 };
@@ -28,35 +28,49 @@ page.onInitialized = function() {
 			//these prefixes are read by the ant task, update the phantom runner if changing them
 			var PASS_PREFIX = "PASS: ";
 			var FAIL_PREFIX = "FAIL: ";
+						
+			var testCount = 0;
+			var assertionCount = 0;
 			
-			QUnit.moduleStart(function(module) {
-				alert("Running module: " + module.name);
+			QUnit.moduleStart(function(module) {				
+				window.currentModule = module.name + ": ";
 			});
 			
 			QUnit.moduleDone(function(result) {
-				alert("Module done. Passed: " + result.passed + "/" + result.total + ". Failed: " + result.failed + "/" + result.total + ".");
+				window.currentModule = "";
 			});
 			
 			QUnit.testStart(function(test) {
-				alert("Running test: " + test.name)
+				var module = window.currentModule || "";
+				assertionCount = 0;
+				testCount++;
+				alert(testCount + ". " + module + test.name);
 			});
-			
-			QUnit.testDone(function(result) {
-				alert("Test done. Passed: " + result.passed + "/" + result.total + ". Failed: " + result.failed + "/" + result.total + ".");
+						
+			QUnit.testDone(function(result) {	
+				var module = window.currentModule || "";					
+				alert(module + result.name + " (" + result.passed + ", " + result.failed + ", " + result.total + ")");					
 			});
 			
 			QUnit.log = function(test) {
-
+				
+				assertionCount++;
+						
+				var indent = "    ";
 				var message = test.message || "";
 		    	if(test.result) {
-		    		alert(PASS_PREFIX + message);
+		    		alert(indent + assertionCount + ". " + message);
 		    	} 
 				else {
-		    		alert(FAIL_PREFIX + message + ". Expected [" + test.expected + "] but was [" + test.actual + "].");
+					alert(indent + assertionCount + ". " + message);
+					alert(indent + "Expected [" + test.expected + "] but was [" + test.actual + "].");
 		    	}
 			};
-
+				
+			//failed, passed, total
 			QUnit.done(function(result){
+				alert("Tests completed in " + result.runtime + " milliseconds");
+				alert(result.passed + " tests of " + result.total + " passed, " + result.failed + " failed.\n")
 				window.qunitDone = true;
 			});			
 
@@ -64,7 +78,7 @@ page.onInitialized = function() {
 	});
 };
 
-console.log("Running tests in file: " + url + "...");
+console.log("Running " + url + "...");
 page.open(url, function(status){
 	
 	if (status !== "success") {
