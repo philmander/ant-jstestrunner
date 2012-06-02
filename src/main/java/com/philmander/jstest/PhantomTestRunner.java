@@ -79,6 +79,9 @@ public class PhantomTestRunner {
 				}
 			}
 			
+			System.out.println("Using Phantom JS at : " + phantomLoc.getAbsolutePath());
+			System.out.println("Running tests on " + testFiles.size() + " files");
+			
 			testRunner.runTests(testFiles.toArray(new String[testFiles.size()]));
 			
 						
