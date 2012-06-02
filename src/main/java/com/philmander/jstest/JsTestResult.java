@@ -1,4 +1,4 @@
-package com.philmander.ant.jstest;
+package com.philmander.jstest;
 
 /**
  * Bean to hold test result

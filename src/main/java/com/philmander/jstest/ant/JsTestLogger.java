@@ -1,4 +1,4 @@
-package com.philmander.ant;
+package com.philmander.jstest.ant;
 
 /**
  * Use to pass ant logger into other classes

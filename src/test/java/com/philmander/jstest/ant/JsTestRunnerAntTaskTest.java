@@ -1,4 +1,4 @@
-package com.philmander.ant;
+package com.philmander.jstest.ant;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildFileTest;
 import org.junit.Test;
 
-import com.philmander.ant.JsTestRunnerAntTask;
+import com.philmander.jstest.ant.JsTestRunnerAntTask;
 
 public class JsTestRunnerAntTaskTest extends BuildFileTest {
 

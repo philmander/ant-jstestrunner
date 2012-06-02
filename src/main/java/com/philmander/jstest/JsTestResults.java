@@ -1,4 +1,4 @@
-package com.philmander.ant.jstest;
+package com.philmander.jstest;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.philmander.ant.jstest;
+package com.philmander.jstest;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,8 +19,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.SystemUtils;
 
 import com.google.common.io.Files;
-import com.philmander.ant.JsTestLogger;
-import com.philmander.ant.jstest.JsTestResult.ResultType;
+import com.philmander.jstest.JsTestResult.ResultType;
+import com.philmander.jstest.ant.JsTestLogger;
 
 /**
  * Standalone class for running js unit tests with Phantom

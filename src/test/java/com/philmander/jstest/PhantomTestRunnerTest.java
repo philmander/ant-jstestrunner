@@ -1,4 +1,4 @@
-package com.philmander.ant.jstest;
+package com.philmander.jstest;
 
 import static org.junit.Assert.*;
 
@@ -10,10 +10,11 @@ import java.util.List;
 import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
 
-import com.philmander.ant.JsTestLogger;
-import com.philmander.ant.jstest.PhantomTestRunner;
-import com.philmander.ant.jstest.JsTestResult;
-import com.philmander.ant.jstest.JsTestResult.ResultType;
+import com.philmander.jstest.JsTestResult;
+import com.philmander.jstest.JsTestResults;
+import com.philmander.jstest.PhantomTestRunner;
+import com.philmander.jstest.JsTestResult.ResultType;
+import com.philmander.jstest.ant.JsTestLogger;
 
 public class PhantomTestRunnerTest {
 

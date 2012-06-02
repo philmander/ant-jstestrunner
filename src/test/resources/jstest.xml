@@ -24,7 +24,7 @@
 				includes="ant-jstest-test-jar-with-dependencies.jar,ant-jstestrunner-0.1-deps.jar" />			
 		</path>
 
-		<taskdef name="jstest" classname="com.philmander.ant.JsTestRunnerAntTask">
+		<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerAntTask">
 			<classpath refid="jstest.classpath" />
 		</taskdef>
 	</target>

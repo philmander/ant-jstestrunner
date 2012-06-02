@@ -9,7 +9,7 @@ To get started download the ant-jstestrunner jar file and include the following 
 
 ```xml
 <!-- Define the task -->
-<taskdef name="jstest" classname="com.philmander.ant.JsTestRunnerAntTask" 
+<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerAntTask" 
     classpath="${basedir}/jstestrunner/ant-jstestrunner-0.1-deps.jar" />
 
 <target name="runJsTests">
@@ -64,7 +64,7 @@ project and running
 
 or downloading the jar release and running
 
-`mvn install:install-file -Dfile=/path/to/ant-jstestrunner-0.1.deps.jar -DgroupId=com.philmander.ant -DartifactId=ant-jstestrunner -Dversion=0.1 -Dpackaging=jar`
+`mvn install:install-file -Dfile=/path/to/ant-jstestrunner-0.1.deps.jar -DgroupId=com.philmander.jstest.ant -DartifactId=ant-jstestrunner -Dversion=0.1 -Dpackaging=jar`
 
 Now use the antrun plugin to add the js test runner to your Maven build
 
@@ -80,7 +80,7 @@ Now use the antrun plugin to add the js test runner to your Maven build
 			<configuration>
 				<target>
 					<!-- Define the task -->
-					<taskdef name="jstest" classname="com.philmander.ant.JsTestRunnerAntTask" 
+					<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerAntTask" 
 					    classpath="maven.plugin.classpath" />
 										 
 					<!-- Lint the code -->
@@ -94,7 +94,7 @@ Now use the antrun plugin to add the js test runner to your Maven build
 	</executions>
 	<dependencies>
 		<dependency>
-			<groupId>com.philmander.ant</groupId>
+			<groupId>com.philmander.jstest.ant</groupId>
 			<artifactId>ant-jstestrunner</artifactId>
 			<version>0.1</version>
 		</dependency>
