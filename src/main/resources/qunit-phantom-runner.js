@@ -44,12 +44,13 @@ page.onInitialized = function() {
 				var module = window.currentModule || "";
 				assertionCount = 0;
 				testCount++;
-				alert(testCount + ". " + module + test.name);
+				alert(testCount + ". " + module + test.name + ":");
 			});
 						
 			QUnit.testDone(function(result) {	
-				var module = window.currentModule || "";					
-				alert(module + result.name + " (" + result.passed + ", " + result.failed + ", " + result.total + ")");					
+				var module = window.currentModule || "";		
+				var status = result.failed == 0 ? "passed" : "failed";
+				alert("Test " + status + " (" + result.passed + ", " + result.failed + ", " + result.total + ")");					
 			});
 			
 			QUnit.log = function(test) {
@@ -70,7 +71,7 @@ page.onInitialized = function() {
 			//failed, passed, total
 			QUnit.done(function(result){
 				alert("Tests completed in " + result.runtime + " milliseconds");
-				alert(result.passed + " tests of " + result.total + " passed, " + result.failed + " failed.\n")
+				alert(result.passed + " tests of " + result.total + " passed, " + result.failed + " failed.")
 				window.qunitDone = true;
 			});			
 
@@ -78,7 +79,7 @@ page.onInitialized = function() {
 	});
 };
 
-console.log("Running " + url + "...");
+console.log("\nRunning " + url + "...");
 page.open(url, function(status){
 	
 	if (status !== "success") {
