@@ -52,7 +52,7 @@ destFile     | The file to write the report to | yes
 Run JS test files. In this example a convention is used where all JS test files have the -test.html suffix
 
 ```xml
-<jstest dir="${basedir}/src/tests">
+<jstest dir="${basedir}/src/tests" phantomWin="${basedir}/phantom/win/phantomjs.exe">
     <include name="**/*-test.html"/>
 </jstest>
 ```
@@ -61,7 +61,7 @@ Run JS test files. In this example a convention is used where all JS test files 
 If you wish, the task can be set to not fail the build if any assertion failures or errors are found.
 
 ```xml
-<jstest dir="${basedir}/src/tests" fail="false">
+<jstest dir="${basedir}/src/tests" fail="false" phantomWin="${basedir}/phantom/win/phantomjs.exe">
     <include name="**/*-test.html"/>
 </jstest>
 ```
@@ -69,7 +69,7 @@ If you wish, the task can be set to not fail the build if any assertion failures
 ###Write results to a file
 
 ```xml
-<jstest dir="${basedir}/src/tests">
+<jstest dir="${basedir}/src/tests" phantomWin="${basedir}/phantom/win/phantomjs.exe">
 	<report type="plain" destFile="${basdir}/reports/qunit-results.txt"/>
     <include name="**/*-test.html"/>
 </jstest>
