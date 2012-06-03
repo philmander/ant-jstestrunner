@@ -31,11 +31,11 @@ public class PhantomTestRunner {
 
 	private static final String PHANTOM_QUNIT_RUNNER = "qunit-phantom-runner.js";
 	
-	private static final String PASS_PREFIX = "PASS: ";
+	private static final String PASS_PREFIX = "Test passed";
 	
-	private static final String FAIL_PREFIX = "FAIL: ";
+	private static final String FAIL_PREFIX = "Test failed";
 	
-	private static final String ERROR_PREFIX = "ERROR: ";
+	private static final String ERROR_PREFIX = "Test error";
 
 	private String phantom = null;
 
@@ -178,7 +178,7 @@ public class PhantomTestRunner {
 	public static String getFailureMessage(int failCount, int errorCount) {
 		String pluralFail = failCount > 1 ? "s" : "";
 		String pluralErrors = errorCount > 1 ? "s" : "";
-		String message = "JS tests failed. " + failCount + " assertion" + pluralFail + " failed. " + errorCount + " error" + pluralErrors + ".";
+		String message = "JS tests failed. " + failCount + " test" + pluralFail + " failed. " + errorCount + " error" + pluralErrors + ".";
 		return message;
 	}
 
@@ -188,7 +188,8 @@ public class PhantomTestRunner {
 	 * @return
 	 */
 	public static String getSuccessMessage(int passCount) {
-		String message = "All JS tests passed";
+		String pluralPass = passCount > 1 ? "s" : "";
+		String message = "JS tests passed. " + passCount + " passed" + pluralPass;
 		return message;
 	}
 	

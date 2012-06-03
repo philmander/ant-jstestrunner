@@ -31,6 +31,12 @@
 			//this should pass
 			equal("hello", "hello");
 	    });
+		module("module 1b");
+		test("sample", function() {
+			
+			//this should fail
+			equal("hello", "bye");
+	    });
 	});
 	</script>
 </head>

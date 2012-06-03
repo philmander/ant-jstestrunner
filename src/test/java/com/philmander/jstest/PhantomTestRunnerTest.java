@@ -50,8 +50,8 @@ public class PhantomTestRunnerTest {
 				}
 			}
 
-			assertEquals(6, passCount);
-			assertEquals(3, failCount);
+			assertEquals(4, passCount);
+			assertEquals(4, failCount);
 			assertEquals(1, errorCount);
 
 		} catch (FileNotFoundException e) {

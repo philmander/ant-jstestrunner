@@ -12,7 +12,7 @@ page.onAlert = function(msg) {
 };
 
 page.onError = function (msg, trace) {
-    console.log("ERROR: " + msg);
+    console.log("Test error: " + msg);
     
     trace.forEach(function(item) {
         console.log('  ', item.file, ':', item.line);
@@ -26,31 +26,42 @@ page.onInitialized = function() {
 		window.document.addEventListener( "DOMContentLoaded", function() {
 			
 			//these prefixes are read by the ant task, update the phantom runner if changing them
-			var PASS_PREFIX = "PASS: ";
-			var FAIL_PREFIX = "FAIL: ";
+			var PASS_MESSAGE = "Test passed.";
+			var FAIL_MESSAGE = "Test failed.";
 						
 			var testCount = 0;
 			var assertionCount = 0;
+			var messages = [];
+			var currentModule = "";
 			
 			QUnit.moduleStart(function(module) {				
-				window.currentModule = module.name + ": ";
+				currentModule = module.name + ": ";
 			});
 			
 			QUnit.moduleDone(function(result) {
-				window.currentModule = "";
+				currentModule = "";
 			});
 			
 			QUnit.testStart(function(test) {
-				var module = window.currentModule || "";
-				assertionCount = 0;
-				testCount++;
-				alert(testCount + ". " + module + test.name + ":");
+				//var module = window.currentModule || "";
+				
+				//alert(testCount + ". " + currentModule + test.name + ":");
 			});
 						
-			QUnit.testDone(function(result) {	
-				var module = window.currentModule || "";		
-				var status = result.failed == 0 ? "passed" : "failed";
-				alert("Test " + status + " (" + result.passed + ", " + result.failed + ", " + result.total + ")");					
+			QUnit.testDone(function(result) {
+				
+				assertionCount = 0;
+				testCount++;
+													
+				alert(testCount + ". " + currentModule + result.name + " (" + result.passed + ", " + result.failed + ", " + result.total + ")");		
+				
+				messages.forEach(function(message) {
+					alert(message);
+				});
+				messages = [];
+
+				var status = result.failed == 0 ? PASS_MESSAGE : FAIL_MESSAGE;
+				alert(status);
 			});
 			
 			QUnit.log = function(test) {
@@ -60,11 +71,11 @@ page.onInitialized = function() {
 				var indent = "    ";
 				var message = test.message || "";
 		    	if(test.result) {
-		    		alert(indent + assertionCount + ". " + message);
+		    		messages.push(indent + assertionCount + ". " + message);
 		    	} 
 				else {
-					alert(indent + assertionCount + ". " + message);
-					alert(indent + "Expected [" + test.expected + "] but was [" + test.actual + "].");
+					messages.push(indent + assertionCount + ". " + message);
+					messages.push(indent + "Expected [" + test.expected + "] but was [" + test.actual + "].");
 		    	}
 			};
 				

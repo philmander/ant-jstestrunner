@@ -22,7 +22,7 @@ public class JsTestRunnerAntTaskTest extends BuildFileTest {
 		try {
 			executeTarget("testTypical");
 		} catch (BuildException e) {
-			int expectedFails = 3;
+			int expectedFails = 4;
 			int expectedErrors = 1;
 			assertEquals(JsTestRunnerAntTask.getFailureMessage(expectedFails, expectedErrors), e.getMessage());
 		}

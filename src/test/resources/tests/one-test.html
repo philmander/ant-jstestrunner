@@ -26,21 +26,13 @@
 		        $("#button").trigger("click");
 		        ok(true, "True is true");  		
 		    });
-			test("sample second", function() {
-				
-				$("#button").click(function() {
-				    $("#result").html("Clickked");
-				});
-		
-				//this should fail
-		        $("#button").trigger("click");
-		        equal($("#result").html(), "Clicked", "Button did not work");  
-		
-		        //this shoul pass
-		        $("#button").trigger("click");
-		        ok(true, "True is true");  		
-		    });
 			module("module 1b");
+			test("sample", function() {
+				
+				//this should pass
+				equal("hello", "hello");
+		    });
+			module("module 1c");
 			test("sample", function() {
 				
 				//this should pass
