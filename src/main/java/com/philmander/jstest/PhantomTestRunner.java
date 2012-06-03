@@ -124,7 +124,7 @@ public class PhantomTestRunner {
 		
 		for (String testFile : testFiles) {
 			
-			String loc = fixFilePathForWindows(testFile);
+			String loc = fixFilePath(testFile);
 			String[] params = {
 					phantom, qunitRunner, loc
 			};
@@ -207,7 +207,7 @@ public class PhantomTestRunner {
 		return tempLoc.getAbsolutePath();
 	}
 	
-	private static String fixFilePathForWindows(String loc) {
+	private static String fixFilePath(String loc) {
 		File file = new File(loc);
 		String path = "file:///" + file.getAbsolutePath().replace("\\", "/");
 		return path;

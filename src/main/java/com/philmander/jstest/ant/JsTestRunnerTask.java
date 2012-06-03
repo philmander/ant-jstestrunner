@@ -77,6 +77,8 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger  {
 			int errorCount = results.getErrorCount();
 			log(passCount + " passed. " + failCount + " failed. " + errorCount + " errors");
 			 
+			reportResults(results);
+			
 			if(failCount > 0 || errorCount > 0) {
 				String message  = getFailureMessage(failCount, errorCount);
 				if(fail) {
@@ -87,10 +89,7 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger  {
 				
 			} else {
 				log(getSuccessMessage(passCount));
-			}
-			
-			reportResults(results);
-			
+			}						
 		} catch (IOException e) {
 			
 			throw new BuildException("An IO Exception caused while running JS Unit tests", e);
@@ -117,6 +116,7 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger  {
 			}
 
 			try {
+				log("Writing report to " + report.getDestFile().getAbsolutePath());
 				File outFile = report.getDestFile();
 				Files.createParentDirs(outFile);
 				Files.touch(outFile);
