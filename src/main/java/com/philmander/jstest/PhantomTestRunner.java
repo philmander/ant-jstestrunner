@@ -192,7 +192,7 @@ public class PhantomTestRunner {
 	 */
 	public static String getSuccessMessage(int passCount) {
 		String pluralPass = passCount > 1 ? "s" : "";
-		String message = "JS tests passed. " + passCount + " passed" + pluralPass;
+		String message = "JS tests passed. " + passCount + " test" + pluralPass + " passed.";
 		return message;
 	}
 	

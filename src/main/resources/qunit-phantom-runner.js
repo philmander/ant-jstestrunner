@@ -65,10 +65,10 @@ page.onInitialized = function() {
 				var indent = "    ";
 				var message = test.message || "";
 		    	if(test.result) {
-		    		messages.push(indent + assertionCount + ". " + message);
+		    		messages.push(indent + assertionCount + ". Pass:" + message);
 		    	} 
 				else {
-					messages.push(indent + assertionCount + ". " + message);
+					messages.push(indent + assertionCount + ". Fail:" + message);
 					messages.push(indent + "Expected [" + test.expected + "] but was [" + test.actual + "].");
 		    	}
 			};
