@@ -69,7 +69,7 @@ If you wish, the task can be set to not fail the build if any assertion failures
 ###Write results to a file
 
 ```xml
-<jstest dir="${basedir}/src/tests"
+<jstest dir="${basedir}/src/tests">
 	<report type="plain" destFile="${basdir}/reports/qunit-results.txt"/>
     <include name="**/*-test.html"/>
 </jstest>
