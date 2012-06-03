@@ -3,6 +3,11 @@ package com.philmander.jstest;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Collection of JS test results
+ * @author Phil Mander
+ *
+ */
 public class JsTestResults {
 	
 	private List<JsTestResult> testResults = new ArrayList<JsTestResult>();

@@ -42,12 +42,6 @@ page.onInitialized = function() {
 				currentModule = "";
 			});
 			
-			QUnit.testStart(function(test) {
-				//var module = window.currentModule || "";
-				
-				//alert(testCount + ". " + currentModule + test.name + ":");
-			});
-						
 			QUnit.testDone(function(result) {
 				
 				assertionCount = 0;

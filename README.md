@@ -9,7 +9,7 @@ To get started download the ant-jstestrunner jar file and include the following 
 
 ```xml
 <!-- Define the task -->
-<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerAntTask" 
+<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerTask" 
     classpath="${basedir}/jstestrunner/ant-jstestrunner-0.1-deps.jar" />
 
 <target name="runJsTests">
@@ -21,6 +21,8 @@ To get started download the ant-jstestrunner jar file and include the following 
 ```
 
 ##Parameters
+
+###Task attributes
 
 Attribute    | Description | Required
 ------------ | ----------- | ------------------
@@ -34,6 +36,15 @@ The task is an implicit fileset. See http://ant.apache.org/manual/Types/fileset.
 
 \* The task is not bundled with Phantom JS, you must specify its location. To ensure the build is portable across different operating systems you must specify the location of the Phantom JS executable for each OS the build may run on.
 It is recommended to include the Phantom JS executables within your project.
+
+###Nested elements
+
+####report
+
+Attribute    | Description | Required
+------------ | ----------- | ------------------
+type         | The type of report (currently only 'plain' is supported | no (defaults to 'plain')
+destFile     | The file to write the report to | yes
 
 ##Usage examples
 
@@ -51,6 +62,15 @@ If you wish, the task can be set to not fail the build if any assertion failures
 
 ```xml
 <jstest dir="${basedir}/src/tests" fail="false">
+    <include name="**/*-test.html"/>
+</jstest>
+```
+
+###Write results to a file
+
+```xml
+<jstest dir="${basedir}/src/tests"
+	<report type="plain" destFile="${basdir}/reports/qunit-results.txt"/>
     <include name="**/*-test.html"/>
 </jstest>
 ```
@@ -80,7 +100,7 @@ Now use the antrun plugin to add the js test runner to your Maven build
 			<configuration>
 				<target>
 					<!-- Define the task -->
-					<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerAntTask" 
+					<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerTask" 
 					    classpath="maven.plugin.classpath" />
 										 
 					<!-- Lint the code -->

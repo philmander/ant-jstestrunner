@@ -14,7 +14,6 @@ import com.philmander.jstest.JsTestResult;
 import com.philmander.jstest.JsTestResults;
 import com.philmander.jstest.PhantomTestRunner;
 import com.philmander.jstest.JsTestResult.ResultType;
-import com.philmander.jstest.ant.JsTestLogger;
 
 public class PhantomTestRunnerTest {
 

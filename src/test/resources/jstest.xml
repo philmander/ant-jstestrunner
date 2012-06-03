@@ -24,7 +24,7 @@
 				includes="ant-jstest-test-jar-with-dependencies.jar,ant-jstestrunner-0.1-deps.jar" />			
 		</path>
 
-		<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerAntTask">
+		<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerTask">
 			<classpath refid="jstest.classpath" />
 		</taskdef>
 	</target>
@@ -40,7 +40,16 @@
 	<target name="testNoFail" depends="makeTask">
 
 		<jstest dir="${test.resources.dir}/tests" phantomWin="${test.resources.dir}/phantomjs.exe" fail="false">
-			<include name="**/*-test.js" />
+			<include name="**/*-test.html" />
+		</jstest>
+
+	</target>
+	
+	<target name="testReport" depends="makeTask">
+
+		<jstest dir="${test.resources.dir}/tests" phantomWin="${test.resources.dir}/phantomjs.exe" fail="false">
+			<report type="plain" destFile="${temp.dir}/report/report.txt"/>
+			<include name="**/*-test.html" />
 		</jstest>
 
 	</target>

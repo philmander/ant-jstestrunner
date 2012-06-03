@@ -18,7 +18,6 @@ import org.apache.commons.lang.SystemUtils;
 
 import com.google.common.io.Files;
 import com.philmander.jstest.JsTestResult.ResultType;
-import com.philmander.jstest.ant.JsTestLogger;
 
 /**
  * Standalone class for running js unit tests with Phantom
@@ -137,29 +136,33 @@ public class PhantomTestRunner {
 			//read and parse output from phantom
 			BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			
+			StringBuilder message = new StringBuilder();
 			String line = null;
 			while ((line = input.readLine()) != null) {
+				
+				//TODO: totally need to refactor reporting parsing
 				if(logger != null) {
 					logger.log(line);
 				}
+							
+				message.append(line + "\n");
 				
 				if(line.startsWith(PASS_PREFIX) || line.startsWith(FAIL_PREFIX) || line.startsWith(ERROR_PREFIX)) {
-				
-					String message;
+									
 					ResultType result;
 					if(line.startsWith(PASS_PREFIX)) {
-						result = ResultType.PASS;
-						message = line.substring(PASS_PREFIX.length());						
-					} else if(line.startsWith(FAIL_PREFIX)){
-						message = line.substring(FAIL_PREFIX.length());
+						result = ResultType.PASS;						
+					} else if(line.startsWith(FAIL_PREFIX)) {						
 						result = ResultType.FAIL;					
 					} else {
 						result = ResultType.ERROR;
-						message = line.substring(ERROR_PREFIX.length());					
 					}
 					
-					JsTestResult testResult = new JsTestResult(result, message);
+					JsTestResult testResult = new JsTestResult(result, message.toString());
 					results.addResult(testResult);
+					
+					//reset message
+					message.setLength(0);
 				}
 			}
 			

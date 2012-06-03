@@ -3,22 +3,29 @@ package com.philmander.jstest.ant;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang.SystemUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.taskdefs.MatchingTask;
+import org.apache.tools.ant.types.LogLevel;
 
+import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import com.philmander.jstest.JsTestLogger;
 import com.philmander.jstest.JsTestResults;
 import com.philmander.jstest.PhantomTestRunner;
+import com.philmander.jstest.report.PlainReporter;
+import com.philmander.jstest.report.JsTestResultReporter;
 
 /**
  * JsTestRunner Ant Task
  * @author Phil Mander
  *
  */
-public class JsTestRunnerAntTask extends MatchingTask implements JsTestLogger  {
+public class JsTestRunnerTask extends MatchingTask implements JsTestLogger  {
 	
 	private File dir;
 
@@ -30,7 +37,11 @@ public class JsTestRunnerAntTask extends MatchingTask implements JsTestLogger  {
 	
 	private String phantomLinux = null;
 
-	private String reportFile = null;
+	private List<ReportType> reports = new ArrayList<ReportType>();
+	
+	public void addConfiguredReport(ReportType report) {
+		reports.add(report);
+	}
 
 	/**
 	 * Run Phantom test runner on a set of files
@@ -78,26 +89,40 @@ public class JsTestRunnerAntTask extends MatchingTask implements JsTestLogger  {
 				log(getSuccessMessage(passCount));
 			}
 			
-			//TODO: report the results to file
+			reportResults(results);
+			
 		} catch (IOException e) {
 			
 			throw new BuildException("An IO Exception caused while running JS Unit tests", e);
 		}		
 	}
 
-	private void reportResults(int numFiles, int numErrors, String errorLog) {
+	private void reportResults(JsTestResults results) {
 
-		if (reportFile != null) {
+		for(ReportType report : reports) {
 
-			//TODO: write reporting
+			JsTestResultReporter reporter;
+			
+			//pick a reporter implementation
+			if(report.getType().trim().equalsIgnoreCase("plain")) {
+				reporter = new PlainReporter();
+			} else {
+				//default to plain reporter
+				reporter = new PlainReporter();
+			}				
+			
+			if(report.getDestFile() == null) {
+				error("Could not write a report, destFile attribute was not set");
+				continue;
+			}
 
 			try {
-				File outFile = new File(reportFile);
+				File outFile = report.getDestFile();
 				Files.createParentDirs(outFile);
 				Files.touch(outFile);
-				//Files.write(report.toString(), outFile, Charsets.UTF_8);
+				Files.write(reporter.createReport(results), outFile, Charsets.UTF_8);
 			} catch (IOException e) {
-				log("Could not write report file: " + e.getMessage());
+				error("Could not write report file: " + e.getMessage());
 			}
 		}
 	}
@@ -192,15 +217,9 @@ public class JsTestRunnerAntTask extends MatchingTask implements JsTestLogger  {
 	}
 
 	/**
-	 * TODO: Implement 
-	 * location of file to write test results to.
-	 * @param reportFile
+	 * Logs an error
 	 */
-	public void setReportFile(String reportFile) {
-		this.reportFile = reportFile;
-	}
-
 	public void error(String msg) {
-		log(msg);
+		log(msg, LogLevel.ERR.getLevel());
 	}
 }
