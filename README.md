@@ -1,11 +1,10 @@
 #JSTestRunner Ant Task
 
-Automate Javascript unit tests (currently support is limited to [QUnit](http://docs.jquery.com/Qunit)) with Apache Ant.
+Automate Javascript unit tests with Apache Ant. The task uses [Phantom JS](http://phantomjs.org/), a headless webkit browser, to open and run html unit test files.
 
-The task uses [Phantom JS](http://phantomjs.org/), a headless webkit browser, to open and run html unit test files. The Ant task uses the 
-output to report the results to the console and fail the build if any assertions failed or errors were found.
+NB: Currently support is limited to [QUnit](http://docs.jquery.com/Qunit).
 
-To get started download the ant-jstestrunner jar file and include the following code in your Ant build file.
+To get started [download](https://github.com/philmander/ant-jstestrunner/downloads) the ant-jstestrunner jar file and include the following code in your Ant build file.
 
 ```xml
 <!-- Define the task -->
@@ -75,7 +74,7 @@ If you wish, the task can be set to not fail the build if any assertion failures
 </jstest>
 ```
 
-## Running the task in Maven ##
+## Running the task in Maven
 
 Ant-jstestrunner isn't deployed to the Maven Central Repository yet, but you can install locally either by cloning the 
 project and running
