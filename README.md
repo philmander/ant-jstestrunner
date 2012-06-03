@@ -43,7 +43,7 @@ It is recommended to include the Phantom JS executables within your project.
 
 Attribute    | Description | Required
 ------------ | ----------- | ------------------
-type         | The type of report (currently only 'plain' is supported | no (defaults to 'plain')
+type         | The type of report (currently only 'plain' is supported) | no (defaults to 'plain')
 destFile     | The file to write the report to | yes
 
 ##Usage examples
