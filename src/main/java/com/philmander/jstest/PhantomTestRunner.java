@@ -138,8 +138,14 @@ public class PhantomTestRunner {
 			
 			StringBuilder message = new StringBuilder();
 			String line = null;
-			while ((line = input.readLine()) != null) {
-				
+            boolean keepProcessing = true;
+            while (keepProcessing) {
+                 line = input.readLine();
+                 if (line != null && line.equalsIgnoreCase("EOF")) {
+                     keepProcessing = false;
+                 } else {
+                     keepProcessing = true;
+                 }
 				//TODO: totally need to refactor reporting parsing
 				if(logger != null) {
 					logger.log(line);
