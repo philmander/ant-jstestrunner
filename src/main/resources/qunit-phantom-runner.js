@@ -18,7 +18,7 @@ page.onError = function (msg, trace) {
         console.log('  ', item.file, ':', item.line);
     });
     
-    phantom.exit(1);
+    exit(1);
 };
 
 page.onInitialized = function() {
@@ -89,14 +89,14 @@ page.open(url, function(status){
 	
 	if (status !== "success") {
 		console.log("Unable to access network: " + status);
-		phantom.exit(1);
+        exit(1);
 	} else {
 		var interval = setInterval(function() {
 			
 			
 			if (finished()) {
 				clearInterval(interval);
-				phantom.exit();
+                exit(0);
 			}
 		}, 100);
 	}
@@ -106,4 +106,19 @@ function finished() {
 	return page.evaluate(function(){
 		return window.qunitDone;
   });
+};
+
+// Hack for phantom.exit not always working.
+//
+// PhantomTestRunner (see line 144) is looking for "EOF" while reading the process output stream
+// and will break the processing loop (and eventually destroy the phantomjs.exe process) if EOF is detected.
+//
+// See
+//      https://groups.google.com/forum/?fromgroups#!topic/phantomjs/kaEzJ45VS0c
+//
+// for a lively discussion on phantomjs not always exiting properly in windows.
+function exit(errorCode) {
+    console.log("Exiting with return code: " + errorCode);
+    console.log("EOF");
+    phantom.exit(errorCode);
 };
