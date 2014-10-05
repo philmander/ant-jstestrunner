@@ -7,6 +7,7 @@ import com.philmander.jstest.PhantomTestRunner;
 import com.philmander.jstest.model.TestResults;
 import com.philmander.jstest.report.JsTestResultReporter;
 import com.philmander.jstest.MessageUtil;
+import com.philmander.jstest.report.JunitReporter;
 import com.philmander.jstest.report.PlainReporter;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.tools.ant.BuildException;
@@ -105,6 +106,8 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger {
             //pick a reporter implementation
             if (report.getType().trim().equalsIgnoreCase("plain")) {
                 reporter = new PlainReporter();
+            } else if (report.getType().trim().equalsIgnoreCase("junit")) {
+                    reporter = new JunitReporter();
             } else {
                 //default to plain reporter
                 reporter = new PlainReporter();

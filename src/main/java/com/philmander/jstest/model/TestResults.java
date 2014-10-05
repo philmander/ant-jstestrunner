@@ -49,6 +49,10 @@ public class TestResults {
         return errorCount;
     }
 
+    public int getTotal() {
+        return getPassCount() + getFailCount() + getErrorCount();
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("TestResults{");
