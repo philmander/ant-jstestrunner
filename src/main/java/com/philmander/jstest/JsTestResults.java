@@ -1,4 +1,6 @@
-package com.philmander.jstest.model;
+package com.philmander.jstest;
+
+import com.philmander.jstest.model.TestFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +8,9 @@ import java.util.List;
 /**
  * @author Michael Meyer
  */
-public class TestResults {
+public class JsTestResults {
 
-    private final List<TestSuite> testSuites = new ArrayList<TestSuite>();
+    private final List<TestFile> testFiles = new ArrayList<TestFile>();
 
     private int passCount = 0;
 
@@ -16,16 +18,16 @@ public class TestResults {
 
     private int errorCount;
 
-    public void addTestSuite(TestSuite testSuite) {
-        testSuites.add(testSuite);
+    public void addTestFile(TestFile testFile) {
+        testFiles.add(testFile);
 
-        passCount = passCount + testSuite.getPassCount();
-        failCount = failCount + testSuite.getFailCount();
-        errorCount = errorCount + testSuite.getErrorCount();
+        passCount = passCount + testFile.getPassCount();
+        failCount = failCount + testFile.getFailCount();
+        errorCount = errorCount + testFile.getErrorCount();
     }
 
-    public List<TestSuite> getTestSuites() {
-        return testSuites;
+    public List<TestFile> getTestFiles() {
+        return testFiles;
     }
 
     /**
@@ -55,8 +57,8 @@ public class TestResults {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("TestResults{");
-        sb.append("testSuites=").append(testSuites);
+        final StringBuilder sb = new StringBuilder("JsTestResults{");
+        sb.append("testFiles=").append(testFiles);
         sb.append(", passCount=").append(passCount);
         sb.append(", failCount=").append(failCount);
         sb.append(", errorCount=").append(errorCount);

@@ -1,6 +1,6 @@
 package com.philmander.jstest.report;
 
-import com.philmander.jstest.model.TestResults;
+import com.philmander.jstest.JsTestResults;
 
 import java.io.IOException;
 
@@ -9,6 +9,6 @@ import java.io.IOException;
  */
 public interface JsTestResultReporter {
 
-	public String createReport(TestResults results) throws IOException;
+	public String createReport(JsTestResults results) throws IOException;
 
 }

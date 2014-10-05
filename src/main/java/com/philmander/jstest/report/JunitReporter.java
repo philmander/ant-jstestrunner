@@ -1,6 +1,8 @@
 package com.philmander.jstest.report;
 
+import com.philmander.jstest.JsTestResults;
 import com.philmander.jstest.model.*;
+import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,7 +25,7 @@ import java.io.StringWriter;
  */
 public class JunitReporter implements JsTestResultReporter {
 
-    public String createReport(TestResults results) throws IOException {
+    public String createReport(JsTestResults results) throws IOException {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -38,27 +40,27 @@ public class JunitReporter implements JsTestResultReporter {
             addAttribute(document, testSuitesElement, "failures", results.getFailCount());
             addAttribute(document, testSuitesElement, "tests", results.getTotal());
 
-            for (TestSuite testSuite : results.getTestSuites()) {
+            for (TestFile testFile : results.getTestFiles()) {
                 Element testSuiteElement = document.createElement("testsuite");
                 testSuitesElement.appendChild(testSuiteElement);
 
                 // test suite attributes
-                addAttribute(document, testSuiteElement, "errors", testSuite.getErrorCount());
-                addAttribute(document, testSuiteElement, "failures", testSuite.getFailCount());
-                addAttribute(document, testSuiteElement, "name", testSuite.getTestFile());
-                addAttribute(document, testSuiteElement, "tests", testSuite.getTotal());
+                addAttribute(document, testSuiteElement, "errors", testFile.getErrorCount());
+                addAttribute(document, testSuiteElement, "failures", testFile.getFailCount());
+                addAttribute(document, testSuiteElement, "name", getTestFileName(testFile));
+                addAttribute(document, testSuiteElement, "tests", testFile.getTotal());
 
-                if (testSuite.getSummary() != null) {
-                    addAttribute(document, testSuiteElement, "time", testSuite.getSummary().getRuntime());
+                if (testFile.getSummary() != null) {
+                    addAttribute(document, testSuiteElement, "time", testFile.getSummary().getRuntime());
                 }
 
-                if (testSuite.getError() == null) {
-                    for (Test test : testSuite.getTests()) {
+                if (testFile.getError() == null) {
+                    for (Test test : testFile.getTests()) {
                         Result result = test.getResult();
 
                         Element testcaseElement = document.createElement("testcase");
                         testSuiteElement.appendChild(testcaseElement);
-                        addAttribute(document, testcaseElement, "classname", testSuite.getTestFile());
+                        addAttribute(document, testcaseElement, "classname", getTestFileName(testFile));
                         addAttribute(document, testcaseElement, "name", result.getName());
                         addAttribute(document, testcaseElement, "time", result.getRuntime());
 
@@ -73,13 +75,13 @@ public class JunitReporter implements JsTestResultReporter {
                 } else {
                     Element testcaseElement = document.createElement("testcase");
                     testSuiteElement.appendChild(testcaseElement);
-                    addAttribute(document, testcaseElement, "classname", testSuite.getTestFile());
-                    addAttribute(document, testcaseElement, "name", testSuite.getTestFile());
+                    addAttribute(document, testcaseElement, "classname", getTestFileName(testFile));
+                    addAttribute(document, testcaseElement, "name", getTestFileName(testFile));
 
                     Element errorElement = document.createElement("error");
                     testcaseElement.appendChild(errorElement);
                     addAttribute(document, errorElement, "type", "Javascript");
-                    errorElement.appendChild(document.createTextNode(testSuite.getError().getMessage()));
+                    errorElement.appendChild(document.createTextNode(testFile.getError().getMessage()));
                 }
 
                 Element systemOutElement = document.createElement("system-out");
@@ -102,6 +104,10 @@ public class JunitReporter implements JsTestResultReporter {
         } catch (TransformerException e) {
             throw new IllegalStateException("Failed to generate report", e);
         }
+    }
+
+    private String getTestFileName(TestFile testFile) {
+        return FilenameUtils.getBaseName(testFile.getFile());
     }
 
     private Assertion getFirstFailingAssertion(Test test) {

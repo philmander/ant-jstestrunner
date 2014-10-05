@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Michael Meyer
  */
-public class TestSuite {
+public class TestFile {
 
     private Summary summary;
 
@@ -14,7 +14,7 @@ public class TestSuite {
 
     private Error error;
 
-    private String testFile;
+    private String file;
 
     public Summary getSummary() {
         return summary;
@@ -40,12 +40,12 @@ public class TestSuite {
         this.error = error;
     }
 
-    public String getTestFile() {
-        return testFile;
+    public String getFile() {
+        return file;
     }
 
-    public void setTestFile(String testFile) {
-        this.testFile = testFile;
+    public void setFile(String file) {
+        this.file = file;
     }
 
     /**
@@ -111,11 +111,11 @@ public class TestSuite {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("TestSuite{");
+        final StringBuilder sb = new StringBuilder("TestFile{");
         sb.append("summary=").append(summary);
         sb.append(", tests=").append(tests);
         sb.append(", error=").append(error);
-        sb.append(", testFile='").append(testFile).append('\'');
+        sb.append(", file='").append(file).append('\'');
         sb.append('}');
         return sb.toString();
     }

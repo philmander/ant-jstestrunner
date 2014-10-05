@@ -3,8 +3,8 @@ package com.philmander.jstest.ant;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.philmander.jstest.JsTestLogger;
+import com.philmander.jstest.JsTestResults;
 import com.philmander.jstest.PhantomTestRunner;
-import com.philmander.jstest.model.TestResults;
 import com.philmander.jstest.report.JsTestResultReporter;
 import com.philmander.jstest.MessageUtil;
 import com.philmander.jstest.report.JunitReporter;
@@ -68,7 +68,7 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger {
             log("Running JS Tests...");
             log("-------------------------------------------------------------------------------");
 
-            TestResults results = testRunner.runTests(absoluteFiles);
+            JsTestResults results = testRunner.runTests(absoluteFiles);
 
             log("-------------------------------------------------------------------------------");
             log("Running JS Tests Completed");
@@ -97,7 +97,7 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger {
         }
     }
 
-    private void reportResults(TestResults results) {
+    private void reportResults(JsTestResults results) {
 
         for (ReportType report : reports) {
 

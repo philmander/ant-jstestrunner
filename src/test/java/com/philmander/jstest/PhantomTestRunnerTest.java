@@ -1,6 +1,5 @@
 package com.philmander.jstest;
 
-import com.philmander.jstest.model.TestResults;
 import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
 
@@ -38,7 +37,7 @@ public class PhantomTestRunnerTest {
             String[] testFiles = {testFile1.getAbsolutePath(), testFile2.getAbsolutePath(),
                     testFile3.getAbsolutePath(), testFileError.getAbsolutePath()};
 
-            TestResults results = testRunner.runTests(testFiles);
+            JsTestResults results = testRunner.runTests(testFiles);
 
             assertEquals(4, results.getPassCount());
             assertEquals(4, results.getFailCount());

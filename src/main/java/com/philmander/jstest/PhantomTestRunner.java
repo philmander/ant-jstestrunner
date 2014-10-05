@@ -2,8 +2,7 @@ package com.philmander.jstest;
 
 import com.google.common.io.Files;
 import com.google.gson.Gson;
-import com.philmander.jstest.model.TestResults;
-import com.philmander.jstest.model.TestSuite;
+import com.philmander.jstest.model.TestFile;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.SystemUtils;
@@ -96,16 +95,16 @@ public class PhantomTestRunner {
         return path;
     }
 
-    public TestResults runTests(String[] testFiles) throws IOException {
-        TestResults results = new TestResults();
+    public JsTestResults runTests(String[] files) throws IOException {
+        JsTestResults results = new JsTestResults();
 
         //set up process params
         String qunitRunner = setupPhantomRunnerFile();
 
-        for (String testFile : testFiles) {
-            logger.log("Running " + testFile + "...");
+        for (String file : files) {
+            logger.log("Running " + file + "...");
 
-            String loc = fixFilePath(testFile);
+            String loc = fixFilePath(file);
             String[] params = {
                     phantom, qunitRunner, loc
             };
@@ -128,9 +127,9 @@ public class PhantomTestRunner {
             }
 
             Gson gson = new Gson();
-            TestSuite testSuite = gson.fromJson(output.toString(), TestSuite.class);
-            testSuite.setTestFile(testFile);
-            results.addTestSuite(testSuite);
+            TestFile testFile = gson.fromJson(output.toString(), TestFile.class);
+            testFile.setFile(file);
+            results.addTestFile(testFile);
 
             destroy(process);
         }

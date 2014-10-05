@@ -8,7 +8,7 @@ var page = new WebPage();
 page.onInitialized = function () {
     page.evaluate(function () {
         window.document.addEventListener("DOMContentLoaded", function () {
-            var testSuite = {
+            var testFile = {
                 tests: [],
                 summary: null
             };
@@ -20,8 +20,8 @@ page.onInitialized = function () {
             });
 
             QUnit.done(function (result) {
-                testSuite.summary = result;
-                alert(JSON.stringify(testSuite));
+                testFile.summary = result;
+                alert(JSON.stringify(testFile));
 
                 window.qunitDone = true;
             });
@@ -40,7 +40,7 @@ page.onInitialized = function () {
                     assertions: []
                 };
 
-                testSuite.tests.push(test);
+                testFile.tests.push(test);
                 currentTest = test;
             });
 
@@ -61,26 +61,26 @@ page.onAlert = function (msg) {
 };
 
 page.onError = function (msg, trace) {
-    var testSuite = {
+    var testFile = {
         error: {
             message: msg,
             trace: trace
         }
     };
 
-    console.log(JSON.stringify(testSuite));
+    console.log(JSON.stringify(testFile));
     exit(1);
 };
 
 page.open(url, function (status) {
     if (status !== "success") {
-        var testSuite = {
+        var testFile = {
             error: {
                 message: "Unable to access network: " + status
             }
         };
 
-        console.log(JSON.stringify(testSuite));
+        console.log(JSON.stringify(testFile));
         exit(1);
     } else {
         var interval = setInterval(function () {

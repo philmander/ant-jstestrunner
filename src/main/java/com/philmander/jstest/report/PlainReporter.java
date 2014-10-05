@@ -1,5 +1,6 @@
 package com.philmander.jstest.report;
 
+import com.philmander.jstest.JsTestResults;
 import com.philmander.jstest.MessageUtil;
 import com.philmander.jstest.model.*;
 import com.philmander.jstest.model.Error;
@@ -20,7 +21,7 @@ public class PlainReporter implements JsTestResultReporter {
 
     private static final String INDENT = "   ";
 
-    public String createReport(TestResults results) throws IOException {
+    public String createReport(JsTestResults results) throws IOException {
         final StringWriter stringWriter = new StringWriter();
         final BufferedWriter writer = new BufferedWriter(stringWriter);
 
@@ -30,13 +31,13 @@ public class PlainReporter implements JsTestResultReporter {
         writer.newLine();
 
 
-        for (TestSuite testSuite : results.getTestSuites()) {
-            writer.write("Running file: " + testSuite.getTestFile());
+        for (TestFile testFile : results.getTestFiles()) {
+            writer.write("Running file: " + testFile.getFile());
             writer.newLine();
 
-            if (testSuite.getError() == null) {
+            if (testFile.getError() == null) {
                 int testIndex = 1;
-                for (Test test : testSuite.getTests()) {
+                for (Test test : testFile.getTests()) {
                     Result result = test.getResult();
                     writer.write(testIndex + ". " + test.getModule().getName() + ": " + result.getName()
                             + " (" + result.getPassed() + ", " + result.getFailed() + ", " + result.getTotal() + ")");
@@ -60,14 +61,14 @@ public class PlainReporter implements JsTestResultReporter {
                     testIndex++;
                 }
 
-                Summary summary = testSuite.getSummary();
+                Summary summary = testFile.getSummary();
                 writer.write("Tests completed in " + summary.getRuntime() + " milliseconds");
                 writer.newLine();
-                writer.write(testSuite.getPassCount() + " test of " + testSuite.getTotal() + " passed, " + testSuite.getFailCount() + " failed.");
+                writer.write(testFile.getPassCount() + " test of " + testFile.getTotal() + " passed, " + testFile.getFailCount() + " failed.");
                 writer.newLine();
                 writer.newLine();
             } else {
-                Error error = testSuite.getError();
+                Error error = testFile.getError();
                 writer.write("Error: " + error.getMessage());
                 writer.newLine();
                 writer.write(error.getTrace().toString());
