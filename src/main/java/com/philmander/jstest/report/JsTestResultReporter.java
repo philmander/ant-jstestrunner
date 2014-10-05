@@ -1,13 +1,14 @@
 package com.philmander.jstest.report;
 
-import com.philmander.jstest.JsTestResults;
+import com.philmander.jstest.model.TestResults;
+
+import java.io.IOException;
 
 /**
- * 
  * @author Phil Mander
- *
  */
 public interface JsTestResultReporter {
-	
-	public String createReport(JsTestResults results);
+
+	public String createReport(TestResults results) throws IOException;
+
 }
