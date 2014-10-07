@@ -69,7 +69,7 @@ public class JunitReporter implements JsTestResultReporter {
                         testSuiteElement.appendChild(testcaseElement);
                         addAttribute(document, testcaseElement, "classname", getClassname(testFile, test));
                         addAttribute(document, testcaseElement, "name", result.getName());
-                        addAttribute(document, testcaseElement, "time", result.getRuntime());
+                        addAttribute(document, testcaseElement, "time", result.getRuntimeInSeconds());
 
                         if (test.hasFailed()) {
                             Assertion assertion = getFirstFailingAssertion(test);
@@ -87,8 +87,9 @@ public class JunitReporter implements JsTestResultReporter {
 
                     Element errorElement = document.createElement("error");
                     testcaseElement.appendChild(errorElement);
+                    addAttribute(document, errorElement, "message", testFile.getError().getMessage());
                     addAttribute(document, errorElement, "type", "Javascript");
-                    errorElement.appendChild(document.createTextNode(testFile.getError().getMessage()));
+                    errorElement.appendChild(document.createTextNode(testFile.getError().getFormattedTrace()));
                 }
 
                 Element systemOutElement = document.createElement("system-out");

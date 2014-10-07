@@ -21,6 +21,9 @@ public class Result {
      */
     private int passed;
 
+    /**
+     * Execution time in milliseconds.
+     */
     private int runtime;
 
     /**
@@ -60,8 +63,12 @@ public class Result {
         this.passed = passed;
     }
 
-    public int getRuntime() {
+    public int getRuntimeInMilliseconds() {
         return runtime;
+    }
+
+    public int getRuntimeInSeconds() {
+    return runtime / 1000;
     }
 
     public void setRuntime(int runtime) {
