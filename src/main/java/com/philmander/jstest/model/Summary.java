@@ -40,7 +40,11 @@ public class Summary {
         this.total = total;
     }
 
-    public int getRuntime() {
+    public double getRuntimeInSeconds() {
+        return runtime / 1000.0;
+    }
+
+    public int getRuntimeInMilliseconds() {
         return runtime;
     }
 

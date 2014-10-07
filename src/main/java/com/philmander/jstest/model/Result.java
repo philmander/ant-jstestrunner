@@ -67,8 +67,8 @@ public class Result {
         return runtime;
     }
 
-    public int getRuntimeInSeconds() {
-    return runtime / 1000;
+    public double getRuntimeInSeconds() {
+        return runtime / 1000.0;
     }
 
     public void setRuntime(int runtime) {
