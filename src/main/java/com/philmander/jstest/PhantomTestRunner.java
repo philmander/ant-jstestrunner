@@ -92,6 +92,7 @@ public class PhantomTestRunner {
     private static String fixFilePath(String loc) {
         File file = new File(loc);
         String path = "file:///" + file.getAbsolutePath().replace("\\", "/");
+        
         return path;
     }
 
@@ -129,6 +130,8 @@ public class PhantomTestRunner {
             Gson gson = new Gson();
             TestFile testFile = gson.fromJson(output.toString(), TestFile.class);
             testFile.setFile(file);
+            logger.log(MessageUtil.getTestFileReport(testFile));
+
             results.addTestFile(testFile);
 
             destroy(process);

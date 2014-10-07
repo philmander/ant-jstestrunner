@@ -58,7 +58,7 @@ public class JunitReporter implements JsTestResultReporter {
                 addAttribute(document, testSuiteElement, "tests", testFile.getTotal());
 
                 if (testFile.getSummary() != null) {
-                    addAttribute(document, testSuiteElement, "time", testFile.getSummary().getRuntime());
+                    addAttribute(document, testSuiteElement, "time", testFile.getSummary().getRuntimeInSeconds());
                 }
 
                 if (testFile.getError() == null) {
@@ -137,6 +137,10 @@ public class JunitReporter implements JsTestResultReporter {
     }
 
     private void addAttribute(Document document, Element element, String name, int value) {
+        addAttribute(document, element, name, String.valueOf(value));
+    }
+
+    private void addAttribute(Document document, Element element, String name, double value) {
         addAttribute(document, element, name, String.valueOf(value));
     }
 
