@@ -4,6 +4,7 @@ import com.philmander.jstest.JsTestResults;
 import com.philmander.jstest.MessageUtil;
 import com.philmander.jstest.model.*;
 import com.philmander.jstest.model.Error;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -46,10 +47,16 @@ public class PlainReporter implements JsTestResultReporter {
                     int assertionIndex = 1;
                     for (Assertion assertion : test.getAssertions()) {
                         if (assertion.isResult()) {
-                            writer.write(INDENT + assertionIndex + ". Pass: " + assertion.getMessage());
+                            writer.write(INDENT + assertionIndex + ". Pass");
+                            if (StringUtils.isNotBlank(assertion.getMessage())) {
+                                writer.write(": " + assertion.getMessage());
+                            }
                             writer.newLine();
                         } else {
-                            writer.write(INDENT + assertionIndex + ". Fail: " + assertion.getMessage());
+                            writer.write(INDENT + assertionIndex + ". Fail");
+                            if (StringUtils.isNotBlank(assertion.getMessage())) {
+                                writer.write(": " + assertion.getMessage());
+                            }
                             writer.newLine();
                             writer.write(INDENT + "Expected [" + assertion.getExpected() + "] but was [" + assertion.getActual() + "].");
                             writer.newLine();
@@ -71,7 +78,8 @@ public class PlainReporter implements JsTestResultReporter {
                 Error error = testFile.getError();
                 writer.write("Error: " + error.getMessage());
                 writer.newLine();
-                writer.write(error.getTrace().toString());
+                writer.write(error.getFormattedTrace());
+                writer.newLine();
                 writer.newLine();
             }
         }

@@ -1,15 +1,25 @@
 package com.philmander.jstest.model;
 
-import java.util.Arrays;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.Map;
 
 /**
  * @author Michael Meyer
  */
 public class Error {
 
+    private static final String NEWLINE = System.getProperty("line.separator");
+
+    private static final String FILE_KEY = "file";
+
+    private static final String LINE_KEY = "line";
+
+    private static final String FUNCTION_KEY = "function";
+
     private String message;
 
-    private Object[] trace;
+    private Map<String, String>[] trace;
 
     public String getMessage() {
         return message;
@@ -19,11 +29,63 @@ public class Error {
         this.message = message;
     }
 
-    public Object[] getTrace() {
+    public Map<String, String>[] getTrace() {
         return trace;
     }
 
-    public void setTrace(Object[] trace) {
+    public String getFormattedTrace() {
+        final StringBuilder sb = new StringBuilder();
+
+        if (trace != null) {
+            boolean first = true;
+            for (Map<String, String> map : trace) {
+                final String line = getFormattedTraceLine(map);
+                if (StringUtils.isNotBlank(line)) {
+                    if (!first) {
+                        sb.append(NEWLINE);
+                    }
+                    sb.append(line);
+
+                    first = false;
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+    private String getFormattedTraceLine(Map<String, String> map) {
+        final String file = map.get(FILE_KEY);
+        final String line = map.get(LINE_KEY);
+        final String function = map.get(FUNCTION_KEY);
+
+        final StringBuilder sb = new StringBuilder();
+        boolean first = true;
+
+        if (StringUtils.isNotBlank(function)) {
+            sb.append("function: ").append(function);
+            first = false;
+        }
+
+        if (StringUtils.isNotBlank(line)) {
+            if (!first) {
+                sb.append(", ");
+            }
+            sb.append("line: ").append(line);
+            first = false;
+        }
+
+        if (StringUtils.isNotBlank(file)) {
+            if (!first) {
+                sb.append(", ");
+            }
+            sb.append("file: ").append(file);
+        }
+
+        return sb.toString();
+    }
+
+    public void setTrace(Map<String, String>[] trace) {
         this.trace = trace;
     }
 
@@ -31,9 +93,8 @@ public class Error {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Error{");
         sb.append("message='").append(message).append('\'');
-        sb.append(", trace=").append(Arrays.toString(trace));
         sb.append('}');
         return sb.toString();
     }
-    
+
 }
