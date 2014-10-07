@@ -1,8 +1,10 @@
 package com.philmander.jstest.report;
 
 import com.philmander.jstest.JsTestResults;
-import com.philmander.jstest.model.*;
-import org.apache.commons.io.FilenameUtils;
+import com.philmander.jstest.model.Assertion;
+import com.philmander.jstest.model.Result;
+import com.philmander.jstest.model.Test;
+import com.philmander.jstest.model.TestFile;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,6 +12,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -24,6 +27,11 @@ import java.io.StringWriter;
  * @author Michael Meyer
  */
 public class JunitReporter implements JsTestResultReporter {
+
+    /**
+     * Jenkins expects something that has the structure of a package combined with a class.
+     */
+    private static final String CLASSNAME_PREFIX = "qunit.";
 
     public String createReport(JsTestResults results) throws IOException {
         try {
@@ -41,13 +49,14 @@ public class JunitReporter implements JsTestResultReporter {
             addAttribute(document, testSuitesElement, "tests", results.getTotal());
 
             for (TestFile testFile : results.getTestFiles()) {
+                // Create a 'testsuite' tag for each test file
                 Element testSuiteElement = document.createElement("testsuite");
                 testSuitesElement.appendChild(testSuiteElement);
 
                 // test suite attributes
                 addAttribute(document, testSuiteElement, "errors", testFile.getErrorCount());
                 addAttribute(document, testSuiteElement, "failures", testFile.getFailCount());
-                addAttribute(document, testSuiteElement, "name", getTestFileName(testFile));
+                addAttribute(document, testSuiteElement, "name", testFile.getBaseName());
                 addAttribute(document, testSuiteElement, "tests", testFile.getTotal());
 
                 if (testFile.getSummary() != null) {
@@ -60,7 +69,7 @@ public class JunitReporter implements JsTestResultReporter {
 
                         Element testcaseElement = document.createElement("testcase");
                         testSuiteElement.appendChild(testcaseElement);
-                        addAttribute(document, testcaseElement, "classname", getTestFileName(testFile));
+                        addAttribute(document, testcaseElement, "classname", CLASSNAME_PREFIX + testFile.getBaseName());
                         addAttribute(document, testcaseElement, "name", result.getName());
                         addAttribute(document, testcaseElement, "time", result.getRuntime());
 
@@ -75,8 +84,8 @@ public class JunitReporter implements JsTestResultReporter {
                 } else {
                     Element testcaseElement = document.createElement("testcase");
                     testSuiteElement.appendChild(testcaseElement);
-                    addAttribute(document, testcaseElement, "classname", getTestFileName(testFile));
-                    addAttribute(document, testcaseElement, "name", getTestFileName(testFile));
+                    addAttribute(document, testcaseElement, "classname", CLASSNAME_PREFIX + testFile.getBaseName());
+                    addAttribute(document, testcaseElement, "name", testFile.getBaseName());
 
                     Element errorElement = document.createElement("error");
                     testcaseElement.appendChild(errorElement);
@@ -93,10 +102,11 @@ public class JunitReporter implements JsTestResultReporter {
 
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", 3);
             Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(document);
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             StringWriter writer = new StringWriter();
-            transformer.transform(source, new StreamResult(writer));
+            transformer.transform(new DOMSource(document), new StreamResult(writer));
 
             return writer.toString();
         } catch (ParserConfigurationException e) {
@@ -104,10 +114,6 @@ public class JunitReporter implements JsTestResultReporter {
         } catch (TransformerException e) {
             throw new IllegalStateException("Failed to generate report", e);
         }
-    }
-
-    private String getTestFileName(TestFile testFile) {
-        return FilenameUtils.getBaseName(testFile.getFile());
     }
 
     private Assertion getFirstFailingAssertion(Test test) {

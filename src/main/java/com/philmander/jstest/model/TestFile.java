@@ -1,5 +1,7 @@
 package com.philmander.jstest.model;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,10 @@ public class TestFile {
 
     public void setFile(String file) {
         this.file = file;
+    }
+
+    public String getBaseName() {
+        return FilenameUtils.getBaseName(file);
     }
 
     /**
