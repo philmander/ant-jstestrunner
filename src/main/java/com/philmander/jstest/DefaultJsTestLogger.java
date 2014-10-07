@@ -5,12 +5,12 @@ package com.philmander.jstest;
  */
 public class DefaultJsTestLogger implements JsTestLogger {
 
-    public void log(String msg) {
-        System.out.println("[jstest] " + msg);
+    public void log(String message) {
+        System.out.println(message);
     }
 
-    public void error(String msg) {
-        System.err.println("[jstest] " + msg);
+    public void error(String message) {
+        System.err.println(message);
     }
 
 }
