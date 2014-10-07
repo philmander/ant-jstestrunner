@@ -9,9 +9,6 @@ import java.util.List;
  */
 public class Test {
 
-    /**
-     * Can be <code>null</code> if no module was defined.
-     */
     private Module module;
 
     private List<Assertion> assertions;

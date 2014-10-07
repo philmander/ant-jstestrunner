@@ -1,10 +1,8 @@
 package com.philmander.jstest.report;
 
 import com.philmander.jstest.JsTestResults;
-import com.philmander.jstest.model.Assertion;
-import com.philmander.jstest.model.Result;
-import com.philmander.jstest.model.Test;
-import com.philmander.jstest.model.TestFile;
+import com.philmander.jstest.model.*;
+import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -69,7 +67,7 @@ public class JunitReporter implements JsTestResultReporter {
 
                         Element testcaseElement = document.createElement("testcase");
                         testSuiteElement.appendChild(testcaseElement);
-                        addAttribute(document, testcaseElement, "classname", CLASSNAME_PREFIX + testFile.getBaseName());
+                        addAttribute(document, testcaseElement, "classname", getClassname(testFile, test));
                         addAttribute(document, testcaseElement, "name", result.getName());
                         addAttribute(document, testcaseElement, "time", result.getRuntime());
 
@@ -84,7 +82,7 @@ public class JunitReporter implements JsTestResultReporter {
                 } else {
                     Element testcaseElement = document.createElement("testcase");
                     testSuiteElement.appendChild(testcaseElement);
-                    addAttribute(document, testcaseElement, "classname", CLASSNAME_PREFIX + testFile.getBaseName());
+                    addAttribute(document, testcaseElement, "classname", getClassname(testFile, null));
                     addAttribute(document, testcaseElement, "name", testFile.getBaseName());
 
                     Element errorElement = document.createElement("error");
@@ -114,6 +112,17 @@ public class JunitReporter implements JsTestResultReporter {
         } catch (TransformerException e) {
             throw new IllegalStateException("Failed to generate report", e);
         }
+    }
+
+    private String getClassname(TestFile testFile, Test test) {
+        if (test != null) {
+            final Module module = test.getModule();
+            if (module != null && StringUtils.isNotBlank(module.getName())) {
+                return module.getName() + "." + testFile.getBaseName();
+            }
+        }
+
+        return CLASSNAME_PREFIX + testFile.getBaseName();
     }
 
     private Assertion getFirstFailingAssertion(Test test) {
