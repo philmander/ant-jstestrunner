@@ -4,11 +4,12 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.philmander.jstest.JsTestLogger;
 import com.philmander.jstest.JsTestResults;
+import com.philmander.jstest.MessageUtil;
 import com.philmander.jstest.PhantomTestRunner;
 import com.philmander.jstest.report.JsTestResultReporter;
-import com.philmander.jstest.MessageUtil;
 import com.philmander.jstest.report.JunitReporter;
 import com.philmander.jstest.report.PlainReporter;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -101,18 +102,8 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger {
     private void reportResults(JsTestResults results) {
 
         for (ReportType report : reports) {
-
-            JsTestResultReporter reporter;
-
             //pick a reporter implementation
-            if (report.getType().trim().equalsIgnoreCase("plain")) {
-                reporter = new PlainReporter();
-            } else if (report.getType().trim().equalsIgnoreCase("junit")) {
-                    reporter = new JunitReporter();
-            } else {
-                //default to plain reporter
-                reporter = new PlainReporter();
-            }
+            JsTestResultReporter reporter = getJsTestResultReporter(report);
 
             if (report.getDestFile() == null) {
                 error("Could not write a report, destFile attribute was not set");
@@ -129,6 +120,23 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger {
                 error("Could not write report file: " + e.getMessage());
             }
         }
+    }
+
+    private JsTestResultReporter getJsTestResultReporter(ReportType report) {
+        if (StringUtils.isNotBlank(report.getType())) {
+            final String type = report.getType().trim();
+
+            if (type.equalsIgnoreCase("plain")) {
+                return new PlainReporter();
+            }
+
+            if (type.equalsIgnoreCase("junit")) {
+                return new JunitReporter();
+            }
+        }
+
+        //default to plain reporter
+        return new PlainReporter();
     }
 
     private void checkAttributes() {
