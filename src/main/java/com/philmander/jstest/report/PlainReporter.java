@@ -16,7 +16,7 @@ import java.io.StringWriter;
 public class PlainReporter implements JsTestResultReporter {
 
     public static final String DELIMITER =
-            "===============================================================================\n";
+            "===============================================================================";
 
     public String createReport(JsTestResults results) throws IOException {
         final StringWriter stringWriter = new StringWriter();
@@ -25,6 +25,7 @@ public class PlainReporter implements JsTestResultReporter {
         writer.write("JS Test Results");
         writer.newLine();
         writer.write(DELIMITER);
+        writer.newLine();
         writer.newLine();
 
 
@@ -36,6 +37,7 @@ public class PlainReporter implements JsTestResultReporter {
         }
 
         writer.write(DELIMITER);
+        writer.newLine();
         writer.newLine();
 
         if (results.getFailCount() == 0 && results.getErrorCount() == 0) {
