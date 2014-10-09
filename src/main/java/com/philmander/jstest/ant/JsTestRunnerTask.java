@@ -67,6 +67,7 @@ public class JsTestRunnerTask extends MatchingTask implements JsTestLogger {
 
             log("Running JS Tests...");
             log("-------------------------------------------------------------------------------");
+            log(MessageUtil.NEWLINE);
 
             JsTestResults results = testRunner.runTests(absoluteFiles);
 

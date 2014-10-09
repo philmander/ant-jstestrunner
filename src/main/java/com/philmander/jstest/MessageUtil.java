@@ -13,6 +13,8 @@ import java.io.StringWriter;
  */
 public final class MessageUtil {
 
+    public static final String NEWLINE = System.getProperty("line.separator");
+
     public static final String INDENT = "   ";
 
     private MessageUtil() {
@@ -66,6 +68,14 @@ public final class MessageUtil {
                     }
 
                     assertionIndex++;
+                }
+
+                if (test.isSuccess()) {
+                    writer.write("Test passed.");
+                    writer.newLine();
+                } else {
+                    writer.write("Test failed.");
+                    writer.newLine();
                 }
 
                 testIndex++;

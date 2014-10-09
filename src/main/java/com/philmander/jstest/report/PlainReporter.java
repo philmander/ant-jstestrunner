@@ -22,7 +22,7 @@ public class PlainReporter implements JsTestResultReporter {
         final StringWriter stringWriter = new StringWriter();
         final BufferedWriter writer = new BufferedWriter(stringWriter);
 
-        writer.write("Running JS Tests");
+        writer.write("JS Test Results");
         writer.newLine();
         writer.write(DELIMITER);
         writer.newLine();

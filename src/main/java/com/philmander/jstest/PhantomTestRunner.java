@@ -18,8 +18,6 @@ import java.util.List;
  */
 public class PhantomTestRunner {
 
-    private static final String NEWLINE = System.getProperty("line.separator");
-
     private static final String PHANTOM_QUNIT_RUNNER = "qunit-phantom-runner.js";
 
     private String phantom = null;
@@ -92,7 +90,7 @@ public class PhantomTestRunner {
     private static String fixFilePath(String loc) {
         File file = new File(loc);
         String path = "file:///" + file.getAbsolutePath().replace("\\", "/");
-        
+
         return path;
     }
 
@@ -122,7 +120,7 @@ public class PhantomTestRunner {
             String line = reader.readLine();
             while (line != null && !line.equalsIgnoreCase("EOF")) {
                 output.append(line);
-                output.append(NEWLINE);
+                output.append(MessageUtil.NEWLINE);
 
                 line = reader.readLine();
             }
@@ -130,11 +128,12 @@ public class PhantomTestRunner {
             Gson gson = new Gson();
             TestFile testFile = gson.fromJson(output.toString(), TestFile.class);
             testFile.setFile(file);
-            logger.log(MessageUtil.getTestFileReport(testFile));
-
             results.addTestFile(testFile);
 
             destroy(process);
+
+            logger.log(MessageUtil.getTestFileReport(testFile));
+            logger.log(MessageUtil.NEWLINE);
         }
 
         return results;
