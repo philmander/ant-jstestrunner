@@ -4,7 +4,7 @@ Automate Javascript unit tests with Apache Ant. The task uses [Phantom JS](http:
 
 NB: Currently support is limited to [QUnit](http://docs.jquery.com/Qunit).
 
-To get started [download](https://github.com/micmeyer/ant-jstestrunner/downloads) the ant-jstestrunner jar file, get a [copy of Phantom JS](http://code.google.com/p/phantomjs/downloads/list) and include the following code in your Ant build file.
+To get started [download](https://github.com/micmeyer/ant-jstestrunner/releases) the latest ant-jstestrunner jar file, get a [copy of Phantom JS](http://code.google.com/p/phantomjs/downloads/list) and include the following code in your Ant build file.
 
 ```xml
 <!-- Define the task -->
