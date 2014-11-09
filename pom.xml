@@ -71,8 +71,6 @@
                 <version>2.5.1</version>
                 <configuration>
                     <goals>install</goals>
-                    <username>${github.username}</username>
-                    <password>${github.password}</password>
                 </configuration>
             </plugin>
             <plugin>
