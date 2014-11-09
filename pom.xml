@@ -3,11 +3,11 @@
     <groupId>com.github.micmeyer</groupId>
     <artifactId>ant-jstestrunner</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>ant-jstestrunner</name>
     <scm>
         <developerConnection>scm:git:git@github.com:micmeyer/ant-jstestrunner.git</developerConnection>
-      <tag>ant-jstestrunner-1.0.0</tag>
+      <tag>HEAD</tag>
   </scm>
     <dependencies>
         <dependency>
