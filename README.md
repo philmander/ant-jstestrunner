@@ -1,3 +1,11 @@
+#This project is deprecated
+
+I won't being performing any maintanence on this project other than merging pull requests that merge automatically.
+
+Node.JS projects such as Karma + PhantomJS or via Browserify are better suited to unit testing JS projects these days.
+
+---
+
 #JSTestRunner Ant Task
 
 Automate Javascript unit tests with Apache Ant. The task uses [Phantom JS](http://phantomjs.org/), a headless webkit browser, to open and run html unit test files. Any test failures will (optionally) cause a build to fail.
