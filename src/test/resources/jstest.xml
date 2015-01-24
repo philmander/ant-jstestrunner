@@ -9,9 +9,9 @@
 
 	<!-- Use this prop if testing in ide -->
 	<!--<property name="test.resources.dir" value="${basedir}" />-->
-	
+
 	<property name="temp.dir" value="${basedir}/target/temp" />
-	
+
 	<target name="clean">
 		<delete dir="${temp.dir}" />
 		<mkdir dir="${temp.dir}"/>
@@ -21,7 +21,7 @@
 
 		<path id="jstest.classpath">
 			<fileset dir="${test.resources.dir}/../../../target"
-				includes="ant-jstest-test-jar-with-dependencies.jar,ant-jstestrunner-0.1-deps.jar" />			
+				includes="ant-jstest-test-jar-with-dependencies.jar,ant-jstestrunner-0.1-deps.jar" />
 		</path>
 
 		<taskdef name="jstest" classname="com.philmander.jstest.ant.JsTestRunnerTask">
@@ -36,7 +36,7 @@
 		</jstest>
 
 	</target>
-	
+
 	<target name="testNoFail" depends="makeTask">
 
 		<jstest dir="${test.resources.dir}/tests" phantomWin="${test.resources.dir}/phantomjs.exe" fail="false">
@@ -44,7 +44,7 @@
 		</jstest>
 
 	</target>
-	
+
 	<target name="testReport" depends="makeTask">
 
 		<jstest dir="${test.resources.dir}/tests" phantomWin="${test.resources.dir}/phantomjs.exe" fail="false">
@@ -53,5 +53,14 @@
 		</jstest>
 
 	</target>
-	
+
+    <target name="testReportTypeOptional" depends="makeTask">
+
+        <jstest dir="${test.resources.dir}/tests" phantomWin="${test.resources.dir}/phantomjs.exe" fail="false">
+            <report destFile="${temp.dir}/report/report.txt"/>
+            <include name="**/*-test.html" />
+        </jstest>
+
+    </target>
+
 </project>

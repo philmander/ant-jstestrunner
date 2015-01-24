@@ -1,55 +1,69 @@
 package com.philmander.jstest;
 
+import com.philmander.jstest.model.TestFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Collection of JS test results
- * @author Phil Mander
- *
+ * @author Michael Meyer
  */
 public class JsTestResults {
-	
-	private List<JsTestResult> testResults = new ArrayList<JsTestResult>();
-	
-	private int failCount = 0;
-	
-	private int passCount = 0;
-	
-	private int errorCount = 0;
 
-	public JsTestResults() {
-		
-	}
-	
-	public void addResult(JsTestResult result) {
-		
-		testResults.add(result);
-		
-		if(result.getResult() == JsTestResult.ResultType.PASS) {
-			passCount++;
-		} else if(result.getResult() == JsTestResult.ResultType.FAIL) {
-			failCount++;			
-		} else if(result.getResult() == JsTestResult.ResultType.ERROR) {
-			errorCount++;
-		}
-	}
+    private final List<TestFile> testFiles = new ArrayList<TestFile>();
 
-	public List<JsTestResult> getTestResults() {
-		return testResults;
-	}
+    private int passCount = 0;
 
-	public int getFailCount() {
-		return failCount;
-	}
+    private int failCount = 0;
 
-	public int getPassCount() {
-		return passCount;
-	}
+    private int errorCount;
 
-	public int getErrorCount() {
-		return errorCount;
-	}
-	
-	
+    public void addTestFile(TestFile testFile) {
+        testFiles.add(testFile);
+
+        passCount = passCount + testFile.getPassCount();
+        failCount = failCount + testFile.getFailCount();
+        errorCount = errorCount + testFile.getErrorCount();
+    }
+
+    public List<TestFile> getTestFiles() {
+        return testFiles;
+    }
+
+    /**
+     * @return Returns the number of tests that where successful.
+     */
+    public int getPassCount() {
+        return passCount;
+    }
+
+    /**
+     * @return Returns the number of tests that have failed.
+     */
+    public int getFailCount() {
+        return failCount;
+    }
+
+    /**
+     * @return Returns the number of test suites that failed without running any tests.
+     */
+    public int getErrorCount() {
+        return errorCount;
+    }
+
+    public int getTotal() {
+        return getPassCount() + getFailCount() + getErrorCount();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("JsTestResults{");
+        sb.append("testFiles=").append(testFiles);
+        sb.append(", passCount=").append(passCount);
+        sb.append(", failCount=").append(failCount);
+        sb.append(", errorCount=").append(errorCount);
+        sb.append('}');
+        return sb.toString();
+    }
+
 }

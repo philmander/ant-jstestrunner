@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuites errors="0" failures="1" tests="2">
+   <testsuite errors="0" failures="1" name="test1" tests="2" time="0.049">
+      <testcase classname="jstestrunner.test1" name="test onLoad" time="0.012"/>
+      <testcase classname="qunit.test1" name="test refresh" time="0.019">
+         <failure type="Javascript">Some error message...</failure>
+      </testcase>
+      <system-out/>
+      <system-err/>
+   </testsuite>
+</testsuites>
